@@ -1,0 +1,43 @@
+﻿<Window x:Class="TextEditor.PrintPreviewDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TextEditor"
+        mc:Ignorable="d"
+        Title="PrintPreviewDialog" Height="300" Width="300">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Button Content="&lt;"
+                    Click="PreviousClick" />
+            <TextBlock Text="{Binding CurrentPage}"
+                       Margin="4 2 0 0" />
+            <TextBlock Text=" of "
+                       Margin="0 2 0 0" />
+            <TextBlock Text="{Binding ElementName=pageViewer, Path=DocumentPaginator.PageCount}"
+                       Margin="0 2 4 0" />
+            <Button Content="&gt;"
+                    Click="NextClick" />
+        </StackPanel>
+        <Viewbox Margin="10">
+            <Grid>
+                <Border Background="Gray"
+                        Opacity=".5"
+                        Margin=".5 .5 0 0"
+                        Width="85"
+                        Height="110"
+                        CornerRadius=".25" />
+                <Border BorderBrush="Black"
+                        BorderThickness=".1"
+                        Background="White"
+                        Width="85"
+                        Height="110"
+                        Margin="-.5 -.5 0 0">
+                    <DocumentPageView x:Name="pageViewer" />
+                </Border>
+            </Grid>
+        </Viewbox>
+    </DockPanel>
+</Window>

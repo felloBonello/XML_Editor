@@ -1,0 +1,51 @@
+﻿<Window x:Class="TextEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:TextEditor"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:TextEditor.ViewModel"
+        mc:Ignorable="d"
+        DataContext="{DynamicResource ViewModelWin}"
+        xmlns:prop="clr-namespace:TextEditor.Properties"
+        Title="{x:Static prop:Resources.textEditor}"
+        Height="600"
+        Width="800">
+
+    <!--create namespace for viewModel, set DataContext, set resources-->
+    <Window.Resources>
+        <ResourceDictionary Source="../Dictionary1.xaml"/>
+    </Window.Resources>
+
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Close"
+                        Executed="ApplicationClose" />
+    </Window.CommandBindings>
+    
+    <DockPanel>
+        <local:TextEditorMenu x:Name="menu"
+                              DockPanel.Dock="Top" />
+
+        <local:TextEditorToolbar x:Name="toolbar"
+                                 DockPanel.Dock="Top"/>
+
+        <StatusBar DockPanel.Dock="Bottom">
+            <Label Content="{Binding status, Mode=TwoWay}"/>
+        </StatusBar>
+
+        <TabControl x:Name="tabControl" SelectedItem="{Binding selectedTab, Mode=TwoWay}" ItemsSource="{Binding tabs}">
+            <TabControl.ItemTemplate>
+                <!-- this is the header template-->
+                <DataTemplate>
+                    <TextBlock Text="{Binding header}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <!-- this is the body of the TabItem template-->
+                <DataTemplate>
+                    <ContentControl x:Name="displayHolder" Content="{Binding content, Mode=TwoWay}"/>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+    </DockPanel>
+</Window>
